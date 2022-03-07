@@ -24,10 +24,12 @@ def all_users():
         res = []
         for u in User.query.all():
             res.append(u.to_dict())
-        return json.dumps(res), 200, {'Content-Type': 'application/json; charset=utf-8'}
+        return jsonify(res), 200
+
     # 6 - создание пользователя user посредством метода POST на URL /users
     elif request.method == "POST":
         user_data = json.loads(request.data)
+        # Можно данные брать из словаря form: user_data = request.form
         new_user = User(
             id=user_data["id"],
             first_name=user_data["first_name"],
@@ -46,7 +48,8 @@ def all_users():
 def user(uid: int):
     # 3 - ... и для одного пользователя по идентификатору /users/1
     if request.method == "GET":
-        return json.dumps(User.query.get(uid).to_dict()), 200, {'Content-Type': 'application/json; charset=utf-8'}
+        return jsonify(User.query.get(uid).to_dict()), 200
+
     # 6 - удаление пользователя user посредством метода DELETE на URL /users/<id>
     elif request.method == "DELETE":
         u = User.query.get(uid)
@@ -75,7 +78,8 @@ def all_orders():
         res = []
         for o in Order.query.all():
             res.append(o.to_dict())
-        return json.dumps(res), 200, {'Content-Type': 'application/json; charset=utf-8'}
+        return jsonify(res), 200
+
     # 7 - создание заказа order посредством метода POST на URL /orders
     elif request.method == "POST":
         order_data = json.loads(request.data)
@@ -99,7 +103,8 @@ def all_orders():
 def order(uid: int):
     # 4 - ... и для одного заказа по идентификатору /orders/1
     if request.method == "GET":
-        return json.dumps(Order.query.get(uid).to_dict()), 200, {'Content-Type': 'application/json; charset=utf-8'}
+        return jsonify(Order.query.get(uid).to_dict()), 200
+
     # 7 - удаление заказа order посредством метода DELETE на URL /orders/<id>
     elif request.method == "DELETE":
         o = Order.query.get(uid)
@@ -129,7 +134,8 @@ def all_offers():
         res = []
         for u in Offer.query.all():
             res.append(u.to_dict())
-        return json.dumps(res), 200, {'Content-Type': 'application/json; charset=utf-8'}
+        return jsonify(res), 200
+
     # 8 - создание предложения offer посредством метода POST на URL /offers
     elif request.method == "POST":
         offer_data = json.loads(request.data)
@@ -147,7 +153,8 @@ def all_offers():
 def offer(uid: int):
     # 5 - ... и предложения по идентификатору /offers/<id>
     if request.method == "GET":
-        return json.dumps(Offer.query.get(uid).to_dict()), 200, {'Content-Type': 'application/json; charset=utf-8'}
+        return jsonify(Offer.query.get(uid).to_dict()), 200
+
     # 8 - обновление предложения offer посредством метода PUT на URL /offers/<id>
     elif request.method == "PUT":
         offer_data = json.loads(request.data)
